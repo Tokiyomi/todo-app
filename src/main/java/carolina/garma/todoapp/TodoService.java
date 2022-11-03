@@ -43,12 +43,12 @@ public class TodoService {
     public void addNewTodo(Todo todo) {todos.add(todo);
     }
 
-    public void updateTodo(int id, String content, String priority, LocalDate due_date) {
+    public void updateTodo(int id, Todo todo) {
         for (int i=0;i<todos.size();i++){
             int temp_id = todos.get(i).getId();
             if (temp_id == id) {
-                todos.get(i).setContent(content);
-                todos.get(i).setPriority(priority);
+                todos.get(i).setContent(todo.getContent());
+                todos.get(i).setPriority(todo.getPriority());
                 //todos.get(i).setDue_date(due_date);
             } else {
                 continue;
