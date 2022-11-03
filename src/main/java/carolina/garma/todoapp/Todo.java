@@ -8,19 +8,19 @@ import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class Todo {
-    private Long id; // Incremental id, starts at 1
+    private static final AtomicInteger ID_GENERATOR = new AtomicInteger(1);
+    private int id; // Incremental id, starts at 1
     private String content;
     private String flag = "Undone";
     private String priority;
     private LocalDate creation_date;
     private LocalDate done_date;
     private LocalDate due_date;
-
     public Todo() {
     }
 
-    public Todo(Long id, String content, String flag, String priority, LocalDate creation_date, LocalDate done_date, LocalDate due_date) {
-        this.id = id;
+    public Todo(String content, String flag, String priority, LocalDate creation_date, LocalDate done_date, LocalDate due_date) {
+        this.id = ID_GENERATOR.getAndIncrement();
         this.content = content;
         this.flag = flag;
         this.priority = priority;
@@ -28,8 +28,7 @@ public class Todo {
         this.done_date = done_date;
         this.due_date = due_date;
     }
-
-    public Long getId() {
+    public int getId() {
         return id;
     }
 
@@ -57,7 +56,7 @@ public class Todo {
         return due_date;
     }
 
-    public void setId(Long id) {
+    public void setId(int id) {
         this.id = id;
     }
 

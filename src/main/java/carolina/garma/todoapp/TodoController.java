@@ -1,11 +1,8 @@
 package carolina.garma.todoapp;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.List;
@@ -31,5 +28,14 @@ public class TodoController {
     public void addNewTodo(@RequestBody Todo todo){
         todoService.addNewTodo(todo);
 
+    }
+    @PutMapping(path = "/{id}")
+    public void updateTodo(@PathVariable("id") int id,
+                           @RequestParam(required = false) String content,
+                           @RequestParam(required = false) String priority,
+                           @RequestParam(required = false) LocalDate due_date
+    )
+    {
+        todoService.updateTodo(id, content, priority, due_date);
     }
 }
