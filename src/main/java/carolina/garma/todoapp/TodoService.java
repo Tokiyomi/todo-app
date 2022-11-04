@@ -17,21 +17,30 @@ public class TodoService {
     private static ArrayList<Todo> todos = new ArrayList<>(Arrays.asList(
             new Todo(
                     //1L,
-                    "ola",
-                    "ow",
-                    "owo",
-                    LocalDate.of(2000, 2, 14),
-                    LocalDate.of(2000, 2, 14),
-                    LocalDate.of(2000, 2, 14)
+                    "XYZ",
+                    "Undone",
+                    "Z",
+                    LocalDate.of(2001, 2, 14),
+                    LocalDate.of(2002, 2, 14),
+                    LocalDate.of(2003, 2, 14)
                     ),
             new Todo(
                     //1L,
-                    "ola2",
-                    "ow2",
-                    "owo2",
-                    LocalDate.of(2000, 2, 14),
-                    LocalDate.of(2000, 2, 14),
-                    LocalDate.of(2000, 2, 14)
+                    "ABC",
+                    "Done",
+                    "Z",
+                    LocalDate.of(2003, 2, 14),
+                    LocalDate.of(2002, 2, 14),
+                    LocalDate.of(2001, 2, 14)
+            ),
+            new Todo(
+                    //1L,
+                    "XYZ",
+                    "Done",
+                    "A",
+                    LocalDate.of(2003, 2, 14),
+                    LocalDate.of(2002, 2, 14),
+                    LocalDate.of(2001, 2, 14)
             )
             )
     );
