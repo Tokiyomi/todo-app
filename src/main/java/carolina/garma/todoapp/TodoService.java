@@ -8,15 +8,15 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import java.util.concurrent.atomic.AtomicInteger;
+
 //LocalDate.of(2000, 2, 14),
 @Service
 public class TodoService {
 
     //private static ArrayList<Todo> todos = new ArrayList<Todo>();
+    //Todo todito;
     private static ArrayList<Todo> todos = new ArrayList<>(Arrays.asList(
             new Todo(
-                    //1L,
                     "XYZ",
                     "Undone",
                     "Z",
@@ -49,7 +49,9 @@ public class TodoService {
         return todos;
     }
 
-    public void addNewTodo(Todo todo) {todos.add(todo);
+    public void addNewTodo(Todo todo) {
+        todo.setAtomicId();
+        todos.add(todo);
     }
 
     public void updateTodo(int id, Todo todo) {

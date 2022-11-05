@@ -22,19 +22,19 @@ public class TodoController {
     }
 
     @GetMapping(params = {"orden","flag","priority"})
-    public List<Todo> getTodos(@RequestParam(defaultValue = "all") String orden,
-                               @RequestParam(defaultValue = "All") String flag,
-                               @RequestParam(defaultValue = "All") String priority) {
+    public List<Todo> getTodos(@RequestParam(defaultValue = "default") String orden,
+                               @RequestParam(defaultValue = "all") String flag,
+                               @RequestParam(defaultValue = "all") String priority) {
 
         List<Todo> todos = todoService.getTodos();
 
-        if ((flag.equals("All"))|(priority.equals("All"))){
-            todos = todos;
-        } else {
-            todos = todos.stream().filter(p->p.getFlag().equals(flag)).filter(p->p.getPriority().equals(priority)).collect(Collectors.toList());
+        if (!flag.equals("all")) {
+            todos = todos.stream().filter(p->p.getFlag().equals(flag)).collect(Collectors.toList());
         }
 
-        //System.out.println(todos.size());
+        if (!priority.equals("all")) {
+            todos = todos.stream().filter(p->p.getPriority().equals(priority)).collect(Collectors.toList());
+        }
 
         if (orden.equals("priority")) {
             return todos.stream().sorted(Comparator.comparing(Todo::getPriority)).collect(Collectors.toList());
@@ -47,6 +47,12 @@ public class TodoController {
         }
         //return todoService.getTodos();
     }
+
+    @GetMapping
+    public List<Todo> getTodos() {
+        return todoService.getTodos();
+    }
+
 
     @PostMapping
     public void addNewTodo(@RequestBody Todo todo){

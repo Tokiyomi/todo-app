@@ -20,7 +20,8 @@ public class Todo {
     }
 
     public Todo(String content, String flag, String priority, LocalDate creation_date, LocalDate done_date, LocalDate due_date) {
-        this.id = ID_GENERATOR.getAndIncrement();
+        setAtomicId();
+        this.id = getId();
         this.content = content;
         this.flag = flag;
         this.priority = priority;
@@ -58,6 +59,10 @@ public class Todo {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public void setAtomicId() {
+        this.id = ID_GENERATOR.getAndIncrement();
     }
 
     public void setContent(String content) {
