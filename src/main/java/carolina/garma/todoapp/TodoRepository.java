@@ -1,23 +1,14 @@
 package carolina.garma.todoapp;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
+import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-
-//LocalDate.of(2000, 2, 14),
-@Service
-public class TodoService {
-    private final TodoRepository todorepository;
-    public TodoService(TodoRepository todorepository) {
-        this.todorepository = todorepository;
-    }
-
-
+@Repository
+public class TodoRepository implements TodoRepositoryInterface {
     private static ArrayList<Todo> todos = new ArrayList<>(Arrays.asList(
             new Todo(
                     "XYZ",
@@ -26,7 +17,7 @@ public class TodoService {
                     LocalDate.of(2001, 2, 14),
                     LocalDate.of(2002, 2, 14),
                     LocalDate.of(2003, 2, 14)
-                    ),
+            ),
             new Todo(
                     //1L,
                     "ABC",
@@ -45,25 +36,23 @@ public class TodoService {
                     LocalDate.of(2002, 2, 14),
                     LocalDate.of(2001, 2, 14)
             )
-            )
+    )
     );
 
-    /*public List<Todo> getTodos() {
-        return todos;
-    }*/
-
+    @Override
     public List<Todo> getTodos() {
-        return todorepository.getTodos();
+        return todos;
     }
-    /*public void addNewTodo(Todo todo) {
+
+    @Override
+    public void addNewTodo(Todo todo) {
         todo.setAtomicId();
         LocalDate creation_date = LocalDate.now();
         todo.setCreation_date(creation_date);
         todos.add(todo);
-    }*/
-    public void addNewTodo(Todo todo) {todorepository.addNewTodo(todo);}
-
-    /*public void updateTodo(int id, Todo todo) {
+    }
+    @Override
+    public void updateTodo(int id, Todo todo) {
         for (int i=0;i<todos.size();i++){
             int temp_id = todos.get(i).getId();
             if (temp_id == id) {
@@ -76,10 +65,9 @@ public class TodoService {
             }
 
         }
-    }*/
-    public void updateTodo(int id, Todo todo) {todorepository.updateTodo(id,todo);}
-
-    /*public void updateDone(int id) {
+    }
+    @Override
+    public void updateDone(int id) {
         for (int i=0;i<todos.size();i++){
             int temp_id = todos.get(i).getId();
             if (temp_id == id) {
@@ -92,12 +80,9 @@ public class TodoService {
             }
 
         }
-    }*/
-
-
-     public void updateDone(int id) {todorepository.updateDone(id);}
-
-    /*public void updateUndone(int id) {
+    }
+    @Override
+    public void updateUndone(int id) {
         for (int i=0;i<todos.size();i++){
             int temp_id = todos.get(i).getId();
             if (temp_id == id) {
@@ -109,9 +94,5 @@ public class TodoService {
             }
 
         }
-    }*/
-    public void updateUndone(int id) {
-        todorepository.updateUndone(id);
     }
-
 }

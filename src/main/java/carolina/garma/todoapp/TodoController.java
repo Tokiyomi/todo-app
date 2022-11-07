@@ -65,7 +65,6 @@ public class TodoController {
         return todoService.getTodos();
     }
 
-
     @PostMapping
     public void addNewTodo(@RequestBody Todo todo){
         todoService.addNewTodo(todo);
@@ -73,33 +72,19 @@ public class TodoController {
     }
     @PutMapping(path = "/{id}")
     public void updateTodo(@PathVariable("id") int id,
-                           //@RequestParam(required = false) String content,
-                           //@RequestParam(required = false) String priority,
-                           //@RequestParam(required = false) LocalDate due_date
                            @RequestBody Todo todo
     )
     {
-        //todoService.updateTodo(id, content, priority, due_date);
         todoService.updateTodo(id, todo);
     }
 
     @PutMapping(path = "/{id}/done")
-    public void updateDone(@PathVariable("id") int id
-                           //@RequestParam(required = false) String content,
-                           //@RequestParam(required = false) String priority,
-                           //@RequestParam(required = false) LocalDate due_date
-                           //@RequestBody Todo todo
-    ) {
+    public void updateDone(@PathVariable("id") int id) {
         todoService.updateDone(id);
     }
 
     @PutMapping(path = "/{id}/undone")
-    public void updateUndone(@PathVariable("id") int id
-                           //@RequestParam(required = false) String content,
-                           //@RequestParam(required = false) String priority,
-                           //@RequestParam(required = false) LocalDate due_date
-                           //@RequestBody Todo todo
-    ) {
+    public void updateUndone(@PathVariable("id") int id) {
         todoService.updateUndone(id);
     }
 }
