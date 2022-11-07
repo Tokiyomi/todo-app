@@ -9,6 +9,8 @@ public interface TodoRepositoryInterface {
 
     void updateTodo(int id, Todo todo);
 
+    void deleteTodo(int id);
+
     void updateDone(int id);
 
     void updateUndone(int id);

@@ -2,6 +2,8 @@ package carolina.garma.todoapp;
 
 import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
@@ -14,6 +16,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequestMapping(path="/todos")
 public class TodoController {
+    @Autowired
     private final TodoService todoService;
 
     @Autowired
@@ -33,7 +36,6 @@ public class TodoController {
         if (!content.equals("none")) {
             todos = todos.stream().filter(p->p.getContent().contains(content)).collect(Collectors.toList());
         }
-
 
         // Flag filters done/undone
         if (!flag.equals("all")) {
@@ -68,6 +70,7 @@ public class TodoController {
     @PostMapping
     public void addNewTodo(@RequestBody Todo todo){
         todoService.addNewTodo(todo);
+        //ResponseEntity.status(HttpStatus.CREATED).body("Todo Created");// 201 is the response code
 
     }
     @PutMapping(path = "/{id}")
@@ -76,6 +79,11 @@ public class TodoController {
     )
     {
         todoService.updateTodo(id, todo);
+    }
+
+    @DeleteMapping(path = "/{id}")
+    public void deleteTodo(@PathVariable ("id") int id){
+        todoService.deleteTodo(id);
     }
 
     @PutMapping(path = "/{id}/done")

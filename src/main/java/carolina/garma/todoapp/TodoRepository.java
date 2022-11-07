@@ -53,46 +53,49 @@ public class TodoRepository implements TodoRepositoryInterface {
     }
     @Override
     public void updateTodo(int id, Todo todo) {
-        for (int i=0;i<todos.size();i++){
-            int temp_id = todos.get(i).getId();
-            if (temp_id == id) {
-                if (todo.getContent()!=null) {todos.get(i).setContent(todo.getContent());}
-                if (todo.getPriority()!=null) {todos.get(i).setPriority(todo.getPriority());}
-                if (todo.getDue_date()!=null) {todos.get(i).setDue_date(todo.getDue_date());}
-                break;
-            } else {
-                continue;
-            }
+        // Logic for dealing with deleted ids
+        Todo to_update = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
 
+        if (to_update==null) {
+            throw new TodoNotFoundException(id); // Raise Not Found Exception
+        } else {
+            if (todo.getContent()!=null) {to_update.setContent(todo.getContent());}
+            if (todo.getPriority()!=null) {to_update.setPriority(todo.getPriority());}
+            if (todo.getDue_date()!=null) {to_update.setDue_date(todo.getDue_date());}
         }
     }
     @Override
     public void updateDone(int id) {
-        for (int i=0;i<todos.size();i++){
-            int temp_id = todos.get(i).getId();
-            if (temp_id == id) {
-                LocalDate done_date = LocalDate.now();
-                todos.get(i).setDone_date(done_date);
-                todos.get(i).setFlag("Done");
-                break;
-            } else {
-                continue;
-            }
-
+        // Logic for dealing with deleted ids
+        Todo to_done = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
+        if (to_done==null) {
+            throw new TodoNotFoundException(id); // Raise Not Found Exception
+        } else {
+            LocalDate done_date = LocalDate.now();
+            to_done.setDone_date(done_date);
+            to_done.setFlag("Done");
         }
     }
     @Override
     public void updateUndone(int id) {
-        for (int i=0;i<todos.size();i++){
-            int temp_id = todos.get(i).getId();
-            if (temp_id == id) {
-                todos.get(i).setDone_date(null);
-                todos.get(i).setFlag("Undone");
-                break;
-            } else {
-                continue;
-            }
-
+        // Logic for dealing with deleted ids
+        Todo to_undone = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
+        if (to_undone==null) {
+            throw new TodoNotFoundException(id); // Raise Not Found Exception
+        } else {
+            to_undone.setDone_date(null);
+            to_undone.setFlag("Undone");
         }
     }
+
+    public void deleteTodo(int id) {
+        // Logic for dealing with deleted ids
+        Todo to_delete = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
+        if (to_delete==null) {
+            throw new TodoNotFoundException(id); // Raise Not Found Exception
+        } else {
+            todos.remove(to_delete);
+        }
+    }
+
 }
