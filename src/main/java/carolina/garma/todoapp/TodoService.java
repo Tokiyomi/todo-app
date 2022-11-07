@@ -51,6 +51,8 @@ public class TodoService {
 
     public void addNewTodo(Todo todo) {
         todo.setAtomicId();
+        LocalDate creation_date = LocalDate.now();
+        todo.setCreation_date(creation_date);
         todos.add(todo);
     }
 
@@ -58,9 +60,10 @@ public class TodoService {
         for (int i=0;i<todos.size();i++){
             int temp_id = todos.get(i).getId();
             if (temp_id == id) {
-                todos.get(i).setContent(todo.getContent());
-                todos.get(i).setPriority(todo.getPriority());
-                //todos.get(i).setDue_date(due_date);
+                if (todo.getContent()!=null) {todos.get(i).setContent(todo.getContent());}
+                if (todo.getPriority()!=null) {todos.get(i).setPriority(todo.getPriority());}
+                if (todo.getDue_date()!=null) {todos.get(i).setDue_date(todo.getDue_date());}
+                break;
             } else {
                 continue;
             }
@@ -68,27 +71,33 @@ public class TodoService {
         }
     }
 
-    /*public void initializeTodo() {
-        Todo todo1 = new Todo(
-                //1L,
-                "ola",
-                "ow",
-                "owo",
-                LocalDate.of(2000, 2, 14),
-                LocalDate.of(2000, 2, 14),
-                LocalDate.of(2000, 2, 14)
-        );
-        Todo todo2 = new Todo(
-                //1L,
-                "ola2",
-                "ow2",
-                "owo2",
-                LocalDate.of(2000, 2, 14),
-                LocalDate.of(2000, 2, 14),
-                LocalDate.of(2000, 2, 14)
-        );
-        todos.add(todo1);
-        todos.add(todo2);
-    }*/
+    public void updateDone(int id) {
+        for (int i=0;i<todos.size();i++){
+            int temp_id = todos.get(i).getId();
+            if (temp_id == id) {
+                LocalDate done_date = LocalDate.now();
+                todos.get(i).setDone_date(done_date);
+                todos.get(i).setFlag("Done");
+                break;
+            } else {
+                continue;
+            }
+
+        }
+    }
+
+    public void updateUndone(int id) {
+        for (int i=0;i<todos.size();i++){
+            int temp_id = todos.get(i).getId();
+            if (temp_id == id) {
+                todos.get(i).setDone_date(null);
+                todos.get(i).setFlag("Undone");
+                break;
+            } else {
+                continue;
+            }
+
+        }
+    }
 
 }

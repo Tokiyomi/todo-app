@@ -1,5 +1,6 @@
 package carolina.garma.todoapp;
 
+import org.jetbrains.annotations.NotNull;
 import org.springframework.boot.autoconfigure.domain.EntityScan;
 
 import java.time.LocalDate;
