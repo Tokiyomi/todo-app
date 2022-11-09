@@ -10,6 +10,8 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import static carolina.garma.todoapp.TodoPage.getPage;
+
 @Repository
 public class TodoRepository implements TodoRepositoryInterface {
     private static ArrayList<Todo> todos = new ArrayList<>(Arrays.asList(
@@ -51,7 +53,7 @@ public class TodoRepository implements TodoRepositoryInterface {
     public ResponseEntity<Object> addNewTodo(Todo todo) {
         LocalDate creation_date = LocalDate.now();
         todo.setCreation_date(creation_date);
-        Map<String, Object> validation = TodoValidation.validateTodo(todo);
+        Map<String, Object> validation = TodoValidation.validateTodo(todo, todos);
         if (validation.isEmpty()) {
             todo.setAtomicId();
             todos.add(todo);
@@ -60,31 +62,39 @@ public class TodoRepository implements TodoRepositoryInterface {
             return TodoResponseHandler.generateResponse("Invalid Todo", HttpStatus.BAD_REQUEST, todo, validation);
         }
     }
+
     @Override
     public ResponseEntity<Object> updateTodo(int id, Todo todo) {
         // Logic for dealing with deleted ids
         Todo to_update = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
 
-        if (to_update==null) {
+        if (to_update == null) {
             //throw new TodoNotFoundException(id); // Raise Not Found Exception
             return TodoResponseHandler.generateResponse("Todo with id " + id + " not found", HttpStatus.NOT_FOUND, null, null);
         } else {
-            Map<String, Object> validation = TodoValidation.validateTodo(todo);
+            Map<String, Object> validation = TodoValidation.validateTodo(todo, todos);
             if (validation.isEmpty()) {
-                if (todo.getContent()!=null) {to_update.setContent(todo.getContent());}
-                if (todo.getPriority()!=null) {to_update.setPriority(todo.getPriority());}
-                if (todo.getDue_date()!=null) {to_update.setDue_date(todo.getDue_date());}
+                if (todo.getContent() != null) {
+                    to_update.setContent(todo.getContent());
+                }
+                if (todo.getPriority() != null) {
+                    to_update.setPriority(todo.getPriority());
+                }
+                if (todo.getDue_date() != null) {
+                    to_update.setDue_date(todo.getDue_date());
+                }
                 return TodoResponseHandler.generateResponse("Todo updated", HttpStatus.OK, to_update, null);
             } else {
                 return TodoResponseHandler.generateResponse("Invalid Todo", HttpStatus.BAD_REQUEST, todo, validation);
             }
         }
     }
+
     @Override
     public ResponseEntity<Object> updateDone(int id) {
         // Logic for dealing with deleted ids
         Todo to_done = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
-        if (to_done==null) {
+        if (to_done == null) {
             //throw new TodoNotFoundException(id); // Raise Not Found Exception
             return TodoResponseHandler.generateResponse("Todo not found", HttpStatus.NOT_FOUND, null, null);
         } else {
@@ -94,11 +104,12 @@ public class TodoRepository implements TodoRepositoryInterface {
             return TodoResponseHandler.generateResponse("Todo updated", HttpStatus.OK, to_done, null);
         }
     }
+
     @Override
     public ResponseEntity<Object> updateUndone(int id) {
         // Logic for dealing with deleted ids
         Todo to_undone = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
-        if (to_undone==null) {
+        if (to_undone == null) {
             //throw new TodoNotFoundException(id); // Raise Not Found Exception
             //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Todo with id " + id + " not found");
             return TodoResponseHandler.generateResponse("Todo not found", HttpStatus.NOT_FOUND, null, null);
@@ -113,7 +124,7 @@ public class TodoRepository implements TodoRepositoryInterface {
     public ResponseEntity<Object> deleteTodo(int id) {
         // Logic for dealing with deleted ids
         Todo to_delete = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
-        if (to_delete==null) {
+        if (to_delete == null) {
             //throw new TodoNotFoundException(id); // Raise Not Found Exception
             return TodoResponseHandler.generateResponse("Todo not found", HttpStatus.NOT_FOUND, null, null);
         } else {
@@ -121,5 +132,11 @@ public class TodoRepository implements TodoRepositoryInterface {
             return TodoResponseHandler.generateResponse("Todo removed", HttpStatus.OK, to_delete, null);
         }
     }
+
+    public TodoPage<Todo> getPages(List<Todo> todos,int page_number) {
+        TodoPage<Todo> page = getPage(todos, page_number);
+        return page;
+    }
+
 
 }

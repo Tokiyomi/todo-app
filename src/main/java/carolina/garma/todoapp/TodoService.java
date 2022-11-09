@@ -22,6 +22,10 @@ public class TodoService {
     public List<Todo> getTodos() {
         return todorepository.getTodos();
     }
+
+    public TodoPage<Todo> getPages(List<Todo> todos, int page_number) {
+        return todorepository.getPages(todos, page_number);
+    }
     public ResponseEntity<Object> addNewTodo(Todo todo) {return todorepository.addNewTodo(todo);}
 
     public ResponseEntity<Object> updateTodo(int id, Todo todo) {return todorepository.updateTodo(id,todo);}

@@ -1,12 +1,18 @@
 package carolina.garma.todoapp;
 
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 public class TodoValidation {
-    public static Map<String, Object> validateTodo(Todo todo) {
+
+    public static Map<String, Object> validateTodo(Todo todo, ArrayList<Todo> todos) {
+
         Map<String, Object> map = new HashMap<String, Object>();
+        List<Todo> duplicated_content = todos.stream().filter(obj -> obj.getContent().equals(todo.getContent())).toList();
         //boolean flag = true;
         int strLen = todo.getContent().length();
         if (strLen>120){
@@ -15,6 +21,8 @@ public class TodoValidation {
         } else if (strLen==0) {
             map.put("Invalid content", "Todo content must not be empty");
             //flag = false;
+        } else if (duplicated_content.size()>=1) {
+            map.put("Invalid content", "Todo content already exist");
         }
         String done_flag = todo.getFlag();
         LocalDate done_date = todo.getDone_date();

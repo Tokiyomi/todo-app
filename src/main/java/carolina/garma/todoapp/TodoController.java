@@ -24,11 +24,12 @@ public class TodoController {
         this.todoService = todoService;
     }
 
-    @GetMapping(params = {"orden","flag","priority","content"})
-    public List<Todo> getTodos(@RequestParam(defaultValue = "default") String orden,
+    @GetMapping(params = {"orden","flag","priority","content","page"})
+    public TodoPage<Todo> getTodos(@RequestParam(defaultValue = "default") String orden,
                                @RequestParam(defaultValue = "all") String flag,
                                @RequestParam(defaultValue = "all") String priority,
-                               @RequestParam(defaultValue = "none") String content) {
+                               @RequestParam(defaultValue = "none") String content,
+                               @RequestParam(defaultValue = "1") String page) {
 
         List<Todo> todos = todoService.getTodos();
 
@@ -49,23 +50,29 @@ public class TodoController {
 
         // Sorting filters
         if (orden.equals("priority")) {
-            return todos.stream().sorted(Comparator.comparing(Todo::getPriority)).collect(Collectors.toList());
+            todos = todos.stream().sorted(Comparator.comparing(Todo::getPriority)).collect(Collectors.toList());
         }else if (orden.equals("due_date")) {
-            return todos.stream().sorted(Comparator.comparing(Todo::getDue_date)).collect(Collectors.toList());
+            todos=  todos.stream().sorted(Comparator.comparing(Todo::getDue_date)).collect(Collectors.toList());
         }else if (orden.equals("priority-then-date")) {
-            return todos.stream().sorted(Comparator.comparing(Todo::getPriority).thenComparing(Todo::getDue_date)).collect(Collectors.toList());
+            todos=  todos.stream().sorted(Comparator.comparing(Todo::getPriority).thenComparing(Todo::getDue_date)).collect(Collectors.toList());
         } else if (orden.equals("date-then-priority")) {
-            return todos.stream().sorted(Comparator.comparing(Todo::getDue_date).thenComparing(Todo::getPriority)).collect(Collectors.toList());
-        } else { // else is defaultValue="default"
-            return todos;
-        }
+            todos = todos.stream().sorted(Comparator.comparing(Todo::getDue_date).thenComparing(Todo::getPriority)).collect(Collectors.toList());
+        } //else { // else is defaultValue="default"
+            //return todos;
+        //}
         //return todoService.getTodos();
+        return todoService.getPages(todos,Integer.parseInt(page));
     }
 
     @GetMapping
     public List<Todo> getTodos() {
         return todoService.getTodos();
     }
+
+    /*@GetMapping(path = "/page/{page_number}")
+    public TodoPage<Todo> getPages(@PathVariable("page_number") int page_number) {
+        return todoService.getPages(page_number);
+    }*/
 
     @PostMapping
     public ResponseEntity<Object> addNewTodo(@RequestBody Todo todo){
