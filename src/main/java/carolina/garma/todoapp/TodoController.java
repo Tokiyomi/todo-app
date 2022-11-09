@@ -68,31 +68,30 @@ public class TodoController {
     }
 
     @PostMapping
-    public void addNewTodo(@RequestBody Todo todo){
-        todoService.addNewTodo(todo);
-        //ResponseEntity.status(HttpStatus.CREATED).body("Todo Created");// 201 is the response code
+    public ResponseEntity<Object> addNewTodo(@RequestBody Todo todo){
+        return todoService.addNewTodo(todo);// 201 is the response code
 
     }
     @PutMapping(path = "/{id}")
-    public void updateTodo(@PathVariable("id") int id,
+    public ResponseEntity<Object> updateTodo(@PathVariable("id") int id,
                            @RequestBody Todo todo
     )
     {
-        todoService.updateTodo(id, todo);
+        return todoService.updateTodo(id, todo);
     }
 
-    @DeleteMapping(path = "/{id}")
-    public void deleteTodo(@PathVariable ("id") int id){
-        todoService.deleteTodo(id);
+    @DeleteMapping(path = "/{id}/delete")
+    public ResponseEntity<Object> deleteTodo(@PathVariable ("id") int id){
+        return todoService.deleteTodo(id);
     }
 
     @PutMapping(path = "/{id}/done")
-    public void updateDone(@PathVariable("id") int id) {
-        todoService.updateDone(id);
+    public ResponseEntity<Object> updateDone(@PathVariable("id") int id) {
+        return todoService.updateDone(id);
     }
 
     @PutMapping(path = "/{id}/undone")
-    public void updateUndone(@PathVariable("id") int id) {
-        todoService.updateUndone(id);
+    public ResponseEntity<Object> updateUndone(@PathVariable("id") int id) {
+        return todoService.updateUndone(id);
     }
 }

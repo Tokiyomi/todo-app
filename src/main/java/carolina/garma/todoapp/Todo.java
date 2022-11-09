@@ -13,7 +13,7 @@ public class Todo {
     private int id; // Incremental id, starts at 1
     private String content;
     private String flag = "Undone";
-    private String priority;
+    private String priority = "Low";
     private LocalDate creation_date;
     private LocalDate done_date;
     private LocalDate due_date;

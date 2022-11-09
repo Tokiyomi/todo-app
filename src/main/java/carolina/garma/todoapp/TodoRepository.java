@@ -1,11 +1,14 @@
 package carolina.garma.todoapp;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class TodoRepository implements TodoRepositoryInterface {
@@ -45,56 +48,77 @@ public class TodoRepository implements TodoRepositoryInterface {
     }
 
     @Override
-    public void addNewTodo(Todo todo) {
-        todo.setAtomicId();
+    public ResponseEntity<Object> addNewTodo(Todo todo) {
         LocalDate creation_date = LocalDate.now();
         todo.setCreation_date(creation_date);
-        todos.add(todo);
+        Map<String, Object> validation = TodoValidation.validateTodo(todo);
+        if (validation.isEmpty()) {
+            todo.setAtomicId();
+            todos.add(todo);
+            return TodoResponseHandler.generateResponse("Todo created", HttpStatus.CREATED, todo, null);
+        } else {
+            return TodoResponseHandler.generateResponse("Invalid Todo", HttpStatus.BAD_REQUEST, todo, validation);
+        }
     }
     @Override
-    public void updateTodo(int id, Todo todo) {
+    public ResponseEntity<Object> updateTodo(int id, Todo todo) {
         // Logic for dealing with deleted ids
         Todo to_update = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
 
         if (to_update==null) {
-            throw new TodoNotFoundException(id); // Raise Not Found Exception
+            //throw new TodoNotFoundException(id); // Raise Not Found Exception
+            return TodoResponseHandler.generateResponse("Todo with id " + id + " not found", HttpStatus.NOT_FOUND, null, null);
         } else {
-            if (todo.getContent()!=null) {to_update.setContent(todo.getContent());}
-            if (todo.getPriority()!=null) {to_update.setPriority(todo.getPriority());}
-            if (todo.getDue_date()!=null) {to_update.setDue_date(todo.getDue_date());}
+            Map<String, Object> validation = TodoValidation.validateTodo(todo);
+            if (validation.isEmpty()) {
+                if (todo.getContent()!=null) {to_update.setContent(todo.getContent());}
+                if (todo.getPriority()!=null) {to_update.setPriority(todo.getPriority());}
+                if (todo.getDue_date()!=null) {to_update.setDue_date(todo.getDue_date());}
+                return TodoResponseHandler.generateResponse("Todo updated", HttpStatus.OK, to_update, null);
+            } else {
+                return TodoResponseHandler.generateResponse("Invalid Todo", HttpStatus.BAD_REQUEST, todo, validation);
+            }
         }
     }
     @Override
-    public void updateDone(int id) {
+    public ResponseEntity<Object> updateDone(int id) {
         // Logic for dealing with deleted ids
         Todo to_done = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
         if (to_done==null) {
-            throw new TodoNotFoundException(id); // Raise Not Found Exception
+            //throw new TodoNotFoundException(id); // Raise Not Found Exception
+            return TodoResponseHandler.generateResponse("Todo not found", HttpStatus.NOT_FOUND, null, null);
         } else {
             LocalDate done_date = LocalDate.now();
             to_done.setDone_date(done_date);
             to_done.setFlag("Done");
+            return TodoResponseHandler.generateResponse("Todo updated", HttpStatus.OK, to_done, null);
         }
     }
     @Override
-    public void updateUndone(int id) {
+    public ResponseEntity<Object> updateUndone(int id) {
         // Logic for dealing with deleted ids
         Todo to_undone = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
         if (to_undone==null) {
-            throw new TodoNotFoundException(id); // Raise Not Found Exception
+            //throw new TodoNotFoundException(id); // Raise Not Found Exception
+            //return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Todo with id " + id + " not found");
+            return TodoResponseHandler.generateResponse("Todo not found", HttpStatus.NOT_FOUND, null, null);
         } else {
             to_undone.setDone_date(null);
             to_undone.setFlag("Undone");
+            return TodoResponseHandler.generateResponse("Todo updated", HttpStatus.OK, to_undone, null);
+            //return ResponseEntity.status(HttpStatus.OK).body("Todo with id " + id + " updated");
         }
     }
 
-    public void deleteTodo(int id) {
+    public ResponseEntity<Object> deleteTodo(int id) {
         // Logic for dealing with deleted ids
         Todo to_delete = todos.stream().filter(obj -> obj.getId() == id).findFirst().orElse(null);
         if (to_delete==null) {
-            throw new TodoNotFoundException(id); // Raise Not Found Exception
+            //throw new TodoNotFoundException(id); // Raise Not Found Exception
+            return TodoResponseHandler.generateResponse("Todo not found", HttpStatus.NOT_FOUND, null, null);
         } else {
             todos.remove(to_delete);
+            return TodoResponseHandler.generateResponse("Todo removed", HttpStatus.OK, to_delete, null);
         }
     }
 

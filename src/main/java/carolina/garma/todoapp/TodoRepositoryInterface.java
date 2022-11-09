@@ -1,17 +1,19 @@
 package carolina.garma.todoapp;
 
+import org.springframework.http.ResponseEntity;
+
 import java.util.List;
 
 public interface TodoRepositoryInterface {
     List<Todo> getTodos();
 
-    void addNewTodo(Todo todo);
+    ResponseEntity<Object> addNewTodo(Todo todo);
 
-    void updateTodo(int id, Todo todo);
+    ResponseEntity<Object> updateTodo(int id, Todo todo);
 
-    void deleteTodo(int id);
+    ResponseEntity<Object> deleteTodo(int id);
 
-    void updateDone(int id);
+    ResponseEntity<Object> updateDone(int id);
 
-    void updateUndone(int id);
+    ResponseEntity<Object> updateUndone(int id);
 }

@@ -1,6 +1,7 @@
 package carolina.garma.todoapp;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
@@ -21,17 +22,17 @@ public class TodoService {
     public List<Todo> getTodos() {
         return todorepository.getTodos();
     }
-    public void addNewTodo(Todo todo) {todorepository.addNewTodo(todo);}
+    public ResponseEntity<Object> addNewTodo(Todo todo) {return todorepository.addNewTodo(todo);}
 
-    public void updateTodo(int id, Todo todo) {todorepository.updateTodo(id,todo);}
+    public ResponseEntity<Object> updateTodo(int id, Todo todo) {return todorepository.updateTodo(id,todo);}
 
-    public void updateDone(int id) {todorepository.updateDone(id);}
+    public ResponseEntity<Object> updateDone(int id) {return todorepository.updateDone(id);}
 
-    public void updateUndone(int id) {
-        todorepository.updateUndone(id);
+    public ResponseEntity<Object> updateUndone(int id) {
+        return todorepository.updateUndone(id);
     }
 
-    public void deleteTodo(int id) {
-        todorepository.deleteTodo(id);
+    public ResponseEntity<Object> deleteTodo(int id) {
+        return todorepository.deleteTodo(id);
     }
 }
