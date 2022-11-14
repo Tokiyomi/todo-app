@@ -3,6 +3,7 @@ package carolina.garma.todoapp;
 import org.springframework.boot.CommandLineRunner;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -11,20 +12,20 @@ public class Pruebas {
             new Todo(
                     //1L,
                     "ola",
-                    "ow",
-                    "owo",
-                    LocalDate.of(2000, 2, 14),
-                    LocalDate.of(2000, 2, 14),
-                    LocalDate.of(2000, 2, 14)
+                    Todo.done_flag.UNDONE,
+                    Todo.priority_level.HIGH,
+                    LocalDateTime.of(2000, 2, 14,0,0,0),
+                    LocalDateTime.of(2000, 2, 14,0,0,0),
+                    LocalDateTime.of(2000, 2, 14,0,0,0)
             ),
             new Todo(
                     //1L,
                     "ola2",
-                    "ow2",
-                    "owo2",
-                    LocalDate.of(2000, 2, 14),
-                    LocalDate.of(2000, 2, 14),
-                    LocalDate.of(2000, 2, 14)
+                    Todo.done_flag.DONE,
+                    Todo.priority_level.MEDIUM,
+                    LocalDateTime.of(2000, 2, 14,0,0,0),
+                    LocalDateTime.of(2000, 2, 14,0,0,0),
+                    LocalDateTime.of(2000, 2, 14,0,0,0)
             )
     )
     );
@@ -41,8 +42,8 @@ public class Pruebas {
             int temp_id = todos.get(i).getId();
             if (temp_id == id) {
                 todos.get(i).setContent("pruebita");
-                todos.get(i).setPriority("pruebita");
-                todos.get(i).setDue_date(LocalDate.of(2010, 2, 14));
+                todos.get(i).setPriority(Todo.priority_level.HIGH);
+                todos.get(i).setDue_date(LocalDateTime.of(2010, 2, 14,0,0,0));
             } else {
                 continue;
             }

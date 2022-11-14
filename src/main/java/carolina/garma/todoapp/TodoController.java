@@ -46,7 +46,7 @@ public class TodoController {
 
         // Priority filters
         if (!priority.equals("all")) {
-            todos = todos.stream().filter(p->p.getPriority().equals(priority)).collect(Collectors.toList());
+            todos = todos.stream().filter(p->p.getPriority().equals(Todo.priority_level.valueOf(priority))).collect(Collectors.toList());
         }
 
         // Sorting filters
@@ -68,6 +68,11 @@ public class TodoController {
     @GetMapping
     public List<Todo> getTodos() {
         return todoService.getTodos();
+    }
+
+    @GetMapping(path = "avg")
+    public List<timeAvg> getAvg() {
+        return todoService.createTimeLists();
     }
 
     /*@GetMapping(path = "/page/{page_number}")

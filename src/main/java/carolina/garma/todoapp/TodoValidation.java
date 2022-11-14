@@ -3,6 +3,7 @@ package carolina.garma.todoapp;
 import org.springframework.cglib.core.Local;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -26,14 +27,14 @@ public class TodoValidation {
         } else if (duplicated_content.size()>=1) {
             map.put("Invalid content", "Todo content already exist");
         }
-        String done_flag = todo.getFlag();
-        LocalDate done_date = todo.getDone_date();
-        if (done_flag.equals("Done")&done_date==null) {
+        Todo.done_flag done_flag = todo.getFlag();
+        LocalDateTime done_date = todo.getDone_date();
+        if (done_flag.equals(Todo.done_flag.DONE)&done_date==null) {
             map.put("Invalid done date", "You should specify a done date");
             //flag = false;
         }
-        LocalDate due_date = todo.getDue_date();
-        LocalDate creation_date = todo.getCreation_date();
+        LocalDateTime due_date = todo.getDue_date();
+        LocalDateTime creation_date = todo.getCreation_date();
         if (due_date!=null) {
             if (due_date.isBefore(creation_date)) {
                 map.put("Invalid due date", "Due date should be after or equal to creation date");}
