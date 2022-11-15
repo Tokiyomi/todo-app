@@ -21,7 +21,8 @@ public class TodoRepository implements TodoRepositoryInterface {
                     "XYZ",
                     //"UNDONE",
                     Todo.done_enum.UNDONE,
-                    "HIGH",
+                    //"HIGH",
+                    Todo.priority_level.HIGH,
                     LocalDateTime.of(2001, 2, 14,0,0,0),
                     null,
                     LocalDateTime.of(2003, 2, 14,0,0,0)
@@ -31,7 +32,8 @@ public class TodoRepository implements TodoRepositoryInterface {
                     "ABC",
                     //"DONE",
                     Todo.done_enum.DONE,
-                    "LOW",
+                    Todo.priority_level.LOW,
+                    //"LOW",
                     LocalDateTime.of(2000, 2, 14,0,0,0),
                     LocalDateTime.of(2000, 3, 1,9,16,0),
                     LocalDateTime.of(2001, 2, 14,0,0,0)
@@ -41,7 +43,8 @@ public class TodoRepository implements TodoRepositoryInterface {
                     "XYZ",
                     //"DONE",
                     Todo.done_enum.DONE,
-                    "HIGH",
+                    Todo.priority_level.HIGH,
+                    //"HIGH",
                     LocalDateTime.of(2000, 2, 14,0,0,0),
                     LocalDateTime.of(2000, 2, 14,5,12,0),
                     LocalDateTime.of(2001, 2, 14,0,0,0)

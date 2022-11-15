@@ -17,16 +17,19 @@ public class TodoValidation {
         Map<String, Object> map = new HashMap<String, Object>();
         List<Todo> duplicated_content = todos.stream().filter(obj -> obj.getContent().equals(todo.getContent())).toList();
         //boolean flag = true;
-        int strLen = todo.getContent().length();
-        if (strLen>120){
-            map.put("Invalid content", "Todo content must be equal or lesser than 120 chars");
-            //flag = false;
-        } else if (strLen==0) {
-            map.put("Invalid content", "Todo content must not be empty");
-            //flag = false;
-        } else if (duplicated_content.size()>=1) {
-            map.put("Invalid content", "Todo content already exist");
+        if (todo.getContent()!=null) {
+            int strLen = todo.getContent().length();
+            if (strLen>120){
+                map.put("Invalid content", "Todo content must be equal or lesser than 120 chars");
+                //flag = false;
+            } else if (strLen==0) {
+                map.put("Invalid content", "Todo content must not be empty");
+                //flag = false;
+            } else if (duplicated_content.size()>=1) {
+                map.put("Invalid content", "Todo content already exist");
+            }
         }
+
         Todo.done_enum done_flag = todo.getFlag();
         LocalDateTime done_date = todo.getDone_date();
         if (done_flag.equals(Todo.done_enum.DONE)&done_date==null) {

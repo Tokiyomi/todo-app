@@ -51,9 +51,9 @@ public class TodoService {
 
     public List<timeAvg> createTimeLists() {
         List<Todo> total_list = todorepository.getTodos().stream().filter(p -> Objects.nonNull(p.getDone_date())).toList();;
-        List<Todo> low_list = total_list.stream().filter(p->p.getPriority().equals("LOW")).toList();
-        List<Todo> med_list = total_list.stream().filter(p->p.getPriority().equals("MEDIUM")).toList();
-        List<Todo> high_list = total_list.stream().filter(p->p.getPriority().equals("HIGH")).toList();
+        List<Todo> low_list = total_list.stream().filter(p->p.getPriority().equals(Todo.priority_level.LOW)).toList();
+        List<Todo> med_list = total_list.stream().filter(p->p.getPriority().equals(Todo.priority_level.MEDIUM)).toList();
+        List<Todo> high_list = total_list.stream().filter(p->p.getPriority().equals(Todo.priority_level.HIGH)).toList();
 
         timeAvg total_avg = getAvg(total_list, "GLOBAL");
         timeAvg low_avg = getAvg(low_list, "LOW");

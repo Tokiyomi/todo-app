@@ -15,9 +15,11 @@ import java.util.concurrent.atomic.AtomicInteger;
 
 public class Todo {
 
-    /*enum priority_level {
+    enum priority_level {
         LOW, MEDIUM, HIGH;
-    }*/
+    }
+
+    private priority_level priority = priority_level.LOW;
     enum done_enum {
         DONE, UNDONE;
     }
@@ -37,12 +39,12 @@ public class Todo {
     private String content;
     //private String flag = "UNDONE";
 
-    private String priority = "LOW";
+    //private String priority = "LOW";
     private LocalDateTime creation_date;
     private LocalDateTime done_date;
     private LocalDateTime due_date;
 
-    public Todo(String content, done_enum flag, String priority, LocalDateTime creation_date, LocalDateTime done_date, LocalDateTime due_date) {
+    public Todo(String content, done_enum flag, priority_level priority, LocalDateTime creation_date, LocalDateTime done_date, LocalDateTime due_date) {
         setAtomicId();
         this.id = getId();
         this.content = content;
@@ -84,11 +86,11 @@ public class Todo {
         //this.flag = flag;
     //}
 
-    public String getPriority() {
+    public priority_level getPriority() {
         return priority;
     }
 
-    public void setPriority(String priority) {
+    public void setPriority(priority_level priority) {
         this.priority = priority;
     }
 
