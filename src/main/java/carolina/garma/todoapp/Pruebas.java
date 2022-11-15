@@ -12,8 +12,9 @@ public class Pruebas {
             new Todo(
                     //1L,
                     "ola",
-                    Todo.done_flag.UNDONE,
-                    Todo.priority_level.HIGH,
+                    //"UNDONE",
+                    Todo.done_enum.DONE,
+                    "HIGH",
                     LocalDateTime.of(2000, 2, 14,0,0,0),
                     LocalDateTime.of(2000, 2, 14,0,0,0),
                     LocalDateTime.of(2000, 2, 14,0,0,0)
@@ -21,8 +22,9 @@ public class Pruebas {
             new Todo(
                     //1L,
                     "ola2",
-                    Todo.done_flag.DONE,
-                    Todo.priority_level.MEDIUM,
+                    //"DONE",
+                    Todo.done_enum.DONE,
+                    "MEDIUM",
                     LocalDateTime.of(2000, 2, 14,0,0,0),
                     LocalDateTime.of(2000, 2, 14,0,0,0),
                     LocalDateTime.of(2000, 2, 14,0,0,0)
@@ -42,7 +44,7 @@ public class Pruebas {
             int temp_id = todos.get(i).getId();
             if (temp_id == id) {
                 todos.get(i).setContent("pruebita");
-                todos.get(i).setPriority(Todo.priority_level.HIGH);
+                todos.get(i).setPriority("HIGH");
                 todos.get(i).setDue_date(LocalDateTime.of(2010, 2, 14,0,0,0));
             } else {
                 continue;

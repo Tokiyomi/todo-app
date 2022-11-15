@@ -19,8 +19,9 @@ public class TodoRepository implements TodoRepositoryInterface {
     private static ArrayList<Todo> todos = new ArrayList<>(Arrays.asList(
             new Todo(
                     "XYZ",
-                    Todo.done_flag.UNDONE,
-                    Todo.priority_level.HIGH,
+                    //"UNDONE",
+                    Todo.done_enum.UNDONE,
+                    "HIGH",
                     LocalDateTime.of(2001, 2, 14,0,0,0),
                     null,
                     LocalDateTime.of(2003, 2, 14,0,0,0)
@@ -28,8 +29,9 @@ public class TodoRepository implements TodoRepositoryInterface {
             new Todo(
                     //1L,
                     "ABC",
-                    Todo.done_flag.DONE,
-                    Todo.priority_level.LOW,
+                    //"DONE",
+                    Todo.done_enum.DONE,
+                    "LOW",
                     LocalDateTime.of(2000, 2, 14,0,0,0),
                     LocalDateTime.of(2000, 3, 1,9,16,0),
                     LocalDateTime.of(2001, 2, 14,0,0,0)
@@ -37,8 +39,9 @@ public class TodoRepository implements TodoRepositoryInterface {
             new Todo(
                     //1L,
                     "XYZ",
-                    Todo.done_flag.DONE,
-                    Todo.priority_level.HIGH,
+                    //"DONE",
+                    Todo.done_enum.DONE,
+                    "HIGH",
                     LocalDateTime.of(2000, 2, 14,0,0,0),
                     LocalDateTime.of(2000, 2, 14,5,12,0),
                     LocalDateTime.of(2001, 2, 14,0,0,0)
@@ -102,7 +105,7 @@ public class TodoRepository implements TodoRepositoryInterface {
         } else {
             LocalDateTime done_date = LocalDateTime.now();
             to_done.setDone_date(done_date);
-            to_done.setFlag(Todo.done_flag.DONE);
+            to_done.setFlag(Todo.done_enum.DONE);
             return TodoResponseHandler.generateResponse("Todo updated", HttpStatus.OK, to_done, null);
         }
     }
@@ -117,7 +120,7 @@ public class TodoRepository implements TodoRepositoryInterface {
             return TodoResponseHandler.generateResponse("Todo not found", HttpStatus.NOT_FOUND, null, null);
         } else {
             to_undone.setDone_date(null);
-            to_undone.setFlag(Todo.done_flag.UNDONE);
+            to_undone.setFlag(Todo.done_enum.UNDONE);
             return TodoResponseHandler.generateResponse("Todo updated", HttpStatus.OK, to_undone, null);
             //return ResponseEntity.status(HttpStatus.OK).body("Todo with id " + id + " updated");
         }

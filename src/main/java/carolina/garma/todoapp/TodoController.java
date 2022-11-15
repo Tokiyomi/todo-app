@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.HttpClientErrorException;
+import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
 
 import javax.validation.Valid;
 import java.time.LocalDate;
@@ -41,12 +43,12 @@ public class TodoController {
 
         // Flag filters done/undone
         if (!flag.equals("all")) {
-            todos = todos.stream().filter(p->p.getFlag().equals(flag)).collect(Collectors.toList());
+            todos = todos.stream().filter(p->p.getFlag().equals(Todo.done_enum.valueOf(flag))).collect(Collectors.toList());
         }
 
         // Priority filters
         if (!priority.equals("all")) {
-            todos = todos.stream().filter(p->p.getPriority().equals(Todo.priority_level.valueOf(priority))).collect(Collectors.toList());
+            todos = todos.stream().filter(p->p.getPriority().equals(priority)).collect(Collectors.toList());
         }
 
         // Sorting filters
@@ -81,9 +83,8 @@ public class TodoController {
     }*/
 
     @PostMapping
-    public ResponseEntity<Object> addNewTodo(@RequestBody Todo todo){
+    public ResponseEntity<Object> addNewTodo(@RequestBody Todo todo) {
         return todoService.addNewTodo(todo);// 201 is the response code
-
     }
     @PutMapping(path = "/{id}")
     public ResponseEntity<Object> updateTodo(@PathVariable("id") int id,

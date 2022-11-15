@@ -27,9 +27,9 @@ public class TodoValidation {
         } else if (duplicated_content.size()>=1) {
             map.put("Invalid content", "Todo content already exist");
         }
-        Todo.done_flag done_flag = todo.getFlag();
+        Todo.done_enum done_flag = todo.getFlag();
         LocalDateTime done_date = todo.getDone_date();
-        if (done_flag.equals(Todo.done_flag.DONE)&done_date==null) {
+        if (done_flag.equals(Todo.done_enum.DONE)&done_date==null) {
             map.put("Invalid done date", "You should specify a done date");
             //flag = false;
         }
