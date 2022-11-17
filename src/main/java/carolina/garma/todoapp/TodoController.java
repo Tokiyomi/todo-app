@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping(path="/todos")
+@CrossOrigin
 public class TodoController {
     @Autowired
     private final TodoService todoService;
