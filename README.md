@@ -2,7 +2,7 @@
 Spring Boot Java Project: Todo-App using in-memory storage with Java Collections
 
 # Run this project
-Enter to the root project folder a run the following command:
+Enter to the root project folder and run the following command:
 ```
 ./mvnw spring-boot:run
 ```
