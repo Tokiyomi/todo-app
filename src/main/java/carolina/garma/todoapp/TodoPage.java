@@ -11,13 +11,22 @@ public class TodoPage<T> {
     private Integer totalTodos;
     private List<T> items;
 
+    private Integer totalPages;
+
     public TodoPage(Integer pageNumber, Integer totalTodos, List<T> items) {
         this.pageNumber = pageNumber;
         this.todosPerPage = getTodosPerPage();
         this.totalTodos = totalTodos;
         this.items = items;
+        this.totalPages = getTotalPages();
     }
 
+    public Integer getTotalPages() {
+        return totalPages;
+    }
+    public void setTotalPages(Integer totalPages) {
+        this.totalPages = totalPages;
+    }
     public Integer getPageNumber() {
         return pageNumber;
     }
@@ -60,6 +69,14 @@ public class TodoPage<T> {
                 .collect(Collectors.toList());
 
         TodoPage<Todo> page = new TodoPage<>(pageNumber, todos.size(), todoPage);
+
+        Integer totalPages = todos.size()/todosPerPage;
+        if (totalPages==0) {
+            totalPages = 1;
+        } else if (todos.size()%todosPerPage>0) {
+            totalPages += 1;
+        }
+        page.setTotalPages(totalPages);
 
         return page;
     }

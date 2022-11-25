@@ -36,7 +36,7 @@ public class TodoValidation {
             map.put("Invalid done date", "You should specify a done date");
             //flag = false;
         }
-        LocalDateTime due_date = todo.getDue_date();
+        /*LocalDateTime due_date = todo.getDue_date();
         LocalDateTime creation_date = todo.getCreation_date();
         if (due_date!=null) {
             if (due_date.isBefore(creation_date)) {
@@ -45,7 +45,7 @@ public class TodoValidation {
                 if (due_date.isAfter(done_date)) {
                     map.put("Invalid due date", "Due date should be before or equal to done date");}
             }
-        }
+        }*/
 
 
         return map;

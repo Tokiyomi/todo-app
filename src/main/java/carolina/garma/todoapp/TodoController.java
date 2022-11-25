@@ -10,6 +10,7 @@ import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolv
 
 import javax.validation.Valid;
 import java.time.LocalDate;
+import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -28,12 +29,14 @@ public class TodoController {
         this.todoService = todoService;
     }
 
-    @GetMapping(params = {"orden","flag","priority","content","page"})
+    @GetMapping(params = {"orden","flag","priority","content","page","asc"})
     public TodoPage<Todo> getTodos(@RequestParam(defaultValue = "default") String orden,
                                @RequestParam(defaultValue = "all") String flag,
                                @RequestParam(defaultValue = "all") String priority,
-                               @RequestParam(defaultValue = "none") String content,
-                               @RequestParam(defaultValue = "1") String page) {
+                               @RequestParam(defaultValue = "") String content,
+                               @RequestParam(defaultValue = "1") String page,
+                               @RequestParam(defaultValue = "false") String asc
+    ) {
 
         List<Todo> todos = todoService.getTodos();
 
@@ -56,15 +59,21 @@ public class TodoController {
         if (orden.equals("priority")) {
             todos = todos.stream().sorted(Comparator.comparing(Todo::getPriority)).collect(Collectors.toList());
         }else if (orden.equals("due_date")) {
+            todos = todos.stream().filter(p->p.getDue_date()!=null).collect(Collectors.toList());
             todos=  todos.stream().sorted(Comparator.comparing(Todo::getDue_date)).collect(Collectors.toList());
         }else if (orden.equals("priority-then-date")) {
+            todos = todos.stream().filter(p->p.getDue_date()!=null).collect(Collectors.toList());
             todos=  todos.stream().sorted(Comparator.comparing(Todo::getPriority).thenComparing(Todo::getDue_date)).collect(Collectors.toList());
         } else if (orden.equals("date-then-priority")) {
+            todos = todos.stream().filter(p->p.getDue_date()!=null).collect(Collectors.toList());
             todos = todos.stream().sorted(Comparator.comparing(Todo::getDue_date).thenComparing(Todo::getPriority)).collect(Collectors.toList());
-        } //else { // else is defaultValue="default"
-            //return todos;
-        //}
-        //return todoService.getTodos();
+        }
+
+        // Asc filters
+        if (asc.equals("true")) {
+            Collections.reverse(todos);
+        }
+
         return todoService.getPages(todos,Integer.parseInt(page));
     }
 
@@ -88,6 +97,7 @@ public class TodoController {
         return todoService.addNewTodo(todo);// 201 is the response code
     }
     @PutMapping(path = "/{id}")
+    //@PostMapping(path = "/{id}")
     public ResponseEntity<Object> updateTodo(@PathVariable("id") int id,
                            @RequestBody Todo todo
     )

@@ -7,8 +7,10 @@ package carolina.garma.todoapp;
 //import javax.validation.constraints.NotEmpty;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.concurrent.atomic.AtomicInteger;
 
 //import static carolina.garma.todoapp.Todo.done_enum.DONE;
@@ -16,7 +18,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Todo {
 
     enum priority_level {
-        LOW, MEDIUM, HIGH;
+        HIGH, MEDIUM, LOW;
     }
 
     private priority_level priority = priority_level.LOW;

@@ -88,9 +88,10 @@ public class TodoRepository implements TodoRepositoryInterface {
                 if (todo.getPriority() != null) {
                     to_update.setPriority(todo.getPriority());
                 }
-                if (todo.getDue_date() != null) {
+                /*if (todo.getDue_date() != null) {
                     to_update.setDue_date(todo.getDue_date());
-                }
+                }*/
+                to_update.setDue_date(todo.getDue_date());
                 return TodoResponseHandler.generateResponse("Todo updated", HttpStatus.OK, to_update, null);
             } else {
                 return TodoResponseHandler.generateResponse("Invalid Todo", HttpStatus.BAD_REQUEST, todo, validation);
