@@ -49,7 +49,8 @@ public class TodoService {
         return todorepository.deleteTodo(id);
     }
 
-    public List<timeAvg> createTimeLists() {
+    public Map<String, Object> createTimeLists() {
+        Map<String, Object> map = new HashMap<String, Object>();
         List<Todo> total_list = todorepository.getTodos().stream().filter(p -> Objects.nonNull(p.getDone_date())).toList();;
         List<Todo> low_list = total_list.stream().filter(p->p.getPriority().equals(Todo.priority_level.LOW)).toList();
         List<Todo> med_list = total_list.stream().filter(p->p.getPriority().equals(Todo.priority_level.MEDIUM)).toList();
@@ -60,7 +61,13 @@ public class TodoService {
         timeAvg med_avg = getAvg(med_list, "MEDIUM");
         timeAvg high_avg = getAvg(high_list, "HIGH");
 
-        return List.of(total_avg, low_avg, med_avg, high_avg);
+        map.put("GLOBAL",total_avg);
+        map.put("LOW",low_avg);
+        map.put("MEDIUM",med_avg);
+        map.put("HIGH",high_avg);
+
+        //return List.of(total_avg, low_avg, med_avg, high_avg);
+        return map;
     }
 
     public timeAvg getAvg(List<Todo> todos, String priority) {

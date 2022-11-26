@@ -13,6 +13,7 @@ import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.function.Predicate;
 import java.util.stream.Collectors;
@@ -41,7 +42,7 @@ public class TodoController {
         List<Todo> todos = todoService.getTodos();
 
         // Content subsequence filters
-        if (!content.equals("none")) {
+        if (!content.equals("")) {
             todos = todos.stream().filter(p->p.getContent().contains(content)).collect(Collectors.toList());
         }
 
@@ -83,7 +84,7 @@ public class TodoController {
     }
 
     @GetMapping(path = "avg")
-    public List<timeAvg> getAvg() {
+    public Map<String, Object> getAvg() {
         return todoService.createTimeLists();
     }
 

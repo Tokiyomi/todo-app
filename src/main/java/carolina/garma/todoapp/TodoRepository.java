@@ -80,7 +80,7 @@ public class TodoRepository implements TodoRepositoryInterface {
             //throw new TodoNotFoundException(id); // Raise Not Found Exception
             return TodoResponseHandler.generateResponse("Todo with id " + id + " not found", HttpStatus.NOT_FOUND, null, null);
         } else {
-            Map<String, Object> validation = TodoValidation.validateTodo(todo, todos);
+            Map<String, Object> validation = TodoValidation.validateEditedTodo(todo, todos, to_update);
             if (validation.isEmpty()) {
                 if (todo.getContent() != null) {
                     to_update.setContent(todo.getContent());
