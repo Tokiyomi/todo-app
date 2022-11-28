@@ -71,9 +71,10 @@ public class TodoService {
     }
 
     public timeAvg getAvg(List<Todo> todos, String priority) {
-        //List<Todo> todos = todorepository.getTodos();
-        //List<Todo> done_todos = todos.stream().filter(p -> Objects.nonNull(p.getDone_date())).toList();
-        //List<Long> diff_list = new ArrayList<Long>();
+        /*
+        Function that computes time between creation and done dates
+        of finished todos, globally and by priority
+        */
         long sum = 0;
         for (Todo todo : todos) {
 

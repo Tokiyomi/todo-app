@@ -30,12 +30,12 @@ public class TodoValidation {
             }
         } else if (todo.getContent()==null) {map.put("Invalid content", "Todo content should not be null");}
 
-        Todo.done_enum done_flag = todo.getFlag();
+        /*Todo.done_enum done_flag = todo.getFlag();
         LocalDateTime done_date = todo.getDone_date();
         if (done_flag.equals(Todo.done_enum.DONE)&done_date==null) {
             map.put("Invalid done date", "You should specify a done date");
             //flag = false;
-        }
+        }*/
         /*LocalDateTime due_date = todo.getDue_date();
         LocalDateTime creation_date = todo.getCreation_date();
         if (due_date!=null) {

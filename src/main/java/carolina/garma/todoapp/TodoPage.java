@@ -5,13 +5,16 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class TodoPage<T> {
-    private Integer pageNumber;
-    //private static final Integer TODOS_PER_PAGE = 2;
-    private static Integer todosPerPage = 10;
-    private Integer totalTodos;
-    private List<T> items;
+    /*
+    TodoPage class that provides the elements that a single page view contains
+    as well as the method to generate pages
+    */
+    private Integer pageNumber; // Requested page view
+    private static Integer todosPerPage = 10; // Max todos per page view
+    private Integer totalTodos; // Total number of todos
+    private List<T> items; // List of todo items for requested page
 
-    private Integer totalPages;
+    private Integer totalPages; // Total number of pages available
 
     public TodoPage(Integer pageNumber, Integer totalTodos, List<T> items) {
         this.pageNumber = pageNumber;
@@ -60,6 +63,11 @@ public class TodoPage<T> {
     }
 
     public static TodoPage<Todo> getPage(List<Todo> todos, int pageNumber) {
+        /*
+        Method that generates a page view after receiving the list of all current todos
+        It returns a list object that contains current page number, total todos found,
+        total pages, todos per page and the current todo items list (max 10 per page)
+        */
         int skipCount = (pageNumber - 1) * todosPerPage;
 
         List<Todo> todoPage = todos

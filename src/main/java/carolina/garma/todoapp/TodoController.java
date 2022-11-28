@@ -1,35 +1,40 @@
 package carolina.garma.todoapp;
 
-import org.jetbrains.annotations.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.client.HttpClientErrorException;
-import org.springframework.web.servlet.mvc.support.DefaultHandlerExceptionResolver;
-
-import javax.validation.Valid;
-import java.time.LocalDate;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.atomic.AtomicInteger;
-import java.util.function.Predicate;
 import java.util.stream.Collectors;
 
-@RestController
-@RequestMapping(path="/todos")
-@CrossOrigin
+@RestController // Controller annotation to let Spring Boot know this is our controller component
+@RequestMapping(path="/todos") // General path that each request must have
+@CrossOrigin // Connects frontend with backend
 public class TodoController {
+    /*
+    Todo controller component which is in charge of providing access
+    and managing data requests, this component connects our backend with
+    the frontend
+    */
     @Autowired
-    private final TodoService todoService;
+    private final TodoService todoService; // Declare a TodoService variable to connect with our Service layer
 
     @Autowired
     public TodoController(TodoService todoService) {
-        this.todoService = todoService;
+        this.todoService = todoService; // TodoService constructor
     }
 
+    // GET request without any parameter as input, it returns the entire todos list.
+    // This is how data is retrieved before applying any filtering, sorting and pagination view
+    @GetMapping
+    public List<Todo> getTodos() {
+        return todoService.getTodos();
+    }
+
+    // GET request that manages filters, sorting and pagination views as a URI parameter.
+    // Returns a TodoPage object which is a view of the current page that contains at most 10 todos
     @GetMapping(params = {"orden","flag","priority","content","page","asc"})
     public TodoPage<Todo> getTodos(@RequestParam(defaultValue = "default") String orden,
                                @RequestParam(defaultValue = "all") String flag,
@@ -39,7 +44,7 @@ public class TodoController {
                                @RequestParam(defaultValue = "false") String asc
     ) {
 
-        List<Todo> todos = todoService.getTodos();
+        List<Todo> todos = todoService.getTodos(); // Get our current todos list
 
         // Content subsequence filters
         if (!content.equals("")) {
@@ -75,30 +80,27 @@ public class TodoController {
             Collections.reverse(todos);
         }
 
-        return todoService.getPages(todos,Integer.parseInt(page));
+        return todoService.getPages(todos,Integer.parseInt(page)); // return requested page view
     }
 
-    @GetMapping
-    public List<Todo> getTodos() {
-        return todoService.getTodos();
-    }
-
+    // GET request that returns a list containing time avg metrics for all groups (global, low, medium and high)
     @GetMapping(path = "avg")
     public Map<String, Object> getAvg() {
         return todoService.createTimeLists();
     }
 
-    /*@GetMapping(path = "/page/{page_number}")
-    public TodoPage<Todo> getPages(@PathVariable("page_number") int page_number) {
-        return todoService.getPages(page_number);
-    }*/
-
+    // POST request that returns a Response Entity when the
+    // todo is created, validated and added to the todos list
+    // 201 is the response code when success, 400 otherwise
     @PostMapping
     public ResponseEntity<Object> addNewTodo(@RequestBody Todo todo) {
-        return todoService.addNewTodo(todo);// 201 is the response code
+        return todoService.addNewTodo(todo);
     }
+
+    // PUT request that modifies an existing todo.
+    // It receives as input the todo's ID and a json-like object containing the modified properties
+    // If validations succeed, the todo is updated and it returns a 200 response code, 400/404 otherwise
     @PutMapping(path = "/{id}")
-    //@PostMapping(path = "/{id}")
     public ResponseEntity<Object> updateTodo(@PathVariable("id") int id,
                            @RequestBody Todo todo
     )
@@ -106,18 +108,26 @@ public class TodoController {
         return todoService.updateTodo(id, todo);
     }
 
-    @DeleteMapping(path = "/{id}/delete")
-    public ResponseEntity<Object> deleteTodo(@PathVariable ("id") int id){
-        return todoService.deleteTodo(id);
-    }
-
+    // PUT request to update the todo status as done, when this happens a done date is also generated
+    // receives the todo's ID as input
+    // It returns a 200 status code when success, 404 otherwise
     @PutMapping(path = "/{id}/done")
     public ResponseEntity<Object> updateDone(@PathVariable("id") int id) {
         return todoService.updateDone(id);
     }
 
+    // PUT request to update the todo status as undone, when this happens a done date is set as null
+    // receives the todo's ID as input
+    // It returns a 200 status code when success, 404 otherwise
     @PutMapping(path = "/{id}/undone")
     public ResponseEntity<Object> updateUndone(@PathVariable("id") int id) {
         return todoService.updateUndone(id);
+    }
+
+    // PUT request to delete a todo object from the todos list, receives the todo's ID as input
+    // After validation, it returns a 200 status code when success, 404 otherwise
+    @DeleteMapping(path = "/{id}/delete")
+    public ResponseEntity<Object> deleteTodo(@PathVariable ("id") int id){
+        return todoService.deleteTodo(id);
     }
 }

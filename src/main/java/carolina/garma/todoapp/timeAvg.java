@@ -1,6 +1,12 @@
 package carolina.garma.todoapp;
 
 public class timeAvg {
+    /*
+    Class that stores the average time metrics for finished todos.
+    This time metrics are given in days, hours, minutes and seconds.
+    Additionally, it has a String label to specify the group metric by priority
+     */
+
     long seconds;
     long minutes;
     long hours;
