@@ -3,9 +3,6 @@ package carolina.garma.todoapp;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Repository;
-
-import javax.validation.Valid;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,6 +13,11 @@ import static carolina.garma.todoapp.TodoPage.getPage;
 
 @Repository
 public class TodoRepository implements TodoRepositoryInterface {
+    /*
+    Todo repository component which is in charge of providing the
+    CRUD data operations, this component implements List Java Collections
+    methods in order to create, add, delete and edit a todo object inside a list
+    */
 
     // Initialization of my main todos list with some items in it
     private static ArrayList<Todo> todos = new ArrayList<>(Arrays.asList(
