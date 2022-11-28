@@ -7,6 +7,8 @@ Enter to the root project folder and run the following command:
 ./mvnw spring-boot:run
 ```
 
+Project runs in [http://localhost:9090](http://localhost:9090)
+
 # Controller-Service-Repository Pattern
 
  - **Controller:** The Controller layer, at the top of this picture, is solely responsible for exposing the functionality so that it can be consumed 
@@ -17,6 +19,4 @@ Enter to the root project folder and run the following command:
  
 ![spring-pattern](https://t1.daumcdn.net/cfile/tistory/999D30415CEA2C1011)
 
-# Technical Log
-Writting Pending...
 
