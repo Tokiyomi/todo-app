@@ -22,7 +22,7 @@ public class TodoValidation {
          */
 
         Map<String, Object> map = new HashMap<String, Object>();
-        List<Todo> duplicated_content = todos.stream().filter(obj -> obj.getContent().equals(todo.getContent())).toList();
+        List<Todo> duplicated_content = todos.stream().filter(obj -> (obj.getContent()).equalsIgnoreCase(todo.getContent())).toList();
         //boolean flag = true;
         if (todo.getContent()!=null) {
             int strLen = todo.getContent().length();
@@ -57,8 +57,8 @@ public class TodoValidation {
 
         Map<String, Object> map = new HashMap<String, Object>();
 
-        if (!Objects.equals(todo.getContent(), to_update.getContent())) {
-            List<Todo> duplicated_content = todos.stream().filter(obj -> obj.getContent().equals(todo.getContent())).toList();
+        if (!Objects.equals(todo.getContent().toLowerCase(), to_update.getContent().toLowerCase())) {
+            List<Todo> duplicated_content = todos.stream().filter(obj -> obj.getContent().equalsIgnoreCase(todo.getContent())).toList();
             int strLen = todo.getContent().length();
             boolean atleastOneAlpha = todo.getContent().matches(".*[a-zA-Z]+.*");
             if (strLen>120){

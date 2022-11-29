@@ -77,7 +77,7 @@ public class TodoController {
 
         // Asc filters
         if (asc.equals("true")) {
-            Collections.reverse(todos);
+           Collections.reverse(todos);
         }
 
         return todoService.getPages(todos,Integer.parseInt(page)); // return requested page view
