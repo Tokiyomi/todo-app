@@ -48,7 +48,7 @@ public class TodoController {
 
         // Content subsequence filters
         if (!content.equals("")) {
-            todos = todos.stream().filter(p->p.getContent().contains(content)).collect(Collectors.toList());
+            todos = todos.stream().filter(p->p.getContent().toLowerCase().contains(content)).collect(Collectors.toList());
         }
 
         // Flag filters done/undone

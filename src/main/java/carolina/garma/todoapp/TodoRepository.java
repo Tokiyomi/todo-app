@@ -22,7 +22,7 @@ public class TodoRepository implements TodoRepositoryInterface {
     // Initialization of my main todos list with some items in it
     private static ArrayList<Todo> todos = new ArrayList<>(Arrays.asList(
             new Todo(
-                    "First Todo created from backend",
+                    "first todo created from backend",
                     Todo.done_enum.UNDONE,
                     Todo.priority_level.HIGH,
                     LocalDateTime.of(2022, 11, 14,0,0,0),
@@ -30,7 +30,7 @@ public class TodoRepository implements TodoRepositoryInterface {
                     LocalDateTime.of(2022, 12, 31,0,0,0)
             ),
             new Todo(
-                    "Second todo from backend",
+                    "wash my car",
                     Todo.done_enum.DONE,
                     Todo.priority_level.LOW,
                     LocalDateTime.of(2022, 10, 1,0,0,0),
@@ -38,14 +38,103 @@ public class TodoRepository implements TodoRepositoryInterface {
                     LocalDateTime.of(2022, 11, 28,12,0,0)
             ),
             new Todo(
-                    "Third todo created from backend",
+                    "prepare dinner",
                     Todo.done_enum.DONE,
                     Todo.priority_level.HIGH,
                     LocalDateTime.of(2022, 11, 10,0,0,0),
                     LocalDateTime.of(2022, 11, 10,5,12,0),
                     LocalDateTime.of(2022, 11, 28,12,0,0)
+            ),
+            new Todo(
+                    "do Homework",
+                    Todo.done_enum.DONE,
+                    Todo.priority_level.LOW,
+                    LocalDateTime.of(2022, 10, 1,0,0,0),
+                    LocalDateTime.of(2022, 11, 28,9,16,0),
+                    LocalDateTime.of(2022, 11, 28,12,0,0)
+            ),
+            new Todo(
+                    "write essay",
+                    Todo.done_enum.UNDONE,
+                    Todo.priority_level.MEDIUM,
+                    LocalDateTime.of(2022, 10, 1,0,0,0),
+                    null,
+                    null
+            ),
+            new Todo(
+                    "A TODO WITH UPPERCASE",
+                    Todo.done_enum.DONE,
+                    Todo.priority_level.MEDIUM,
+                    LocalDateTime.of(2022, 10, 1,0,0,0),
+                    LocalDateTime.of(2022, 11, 30,9,16,0),
+                    null
+            ),
+            new Todo(
+                    "a todo with lowecase",
+                    Todo.done_enum.UNDONE,
+                    Todo.priority_level.HIGH,
+                    LocalDateTime.of(2022, 10, 1,0,0,0),
+                    null,
+                    LocalDateTime.of(2022, 11, 26,12,0,0)
+            ),
+            new Todo(
+                    "Clean my room",
+                    Todo.done_enum.DONE,
+                    Todo.priority_level.LOW,
+                    LocalDateTime.of(2022, 10, 1,0,0,0),
+                    LocalDateTime.of(2022, 11, 28,9,16,0),
+                    LocalDateTime.of(2022, 11, 28,12,0,0)
+            ),
+            new Todo(
+                    "Second todo from backend",
+                    Todo.done_enum.UNDONE,
+                    Todo.priority_level.MEDIUM,
+                    LocalDateTime.of(2022, 10, 1,0,0,0),
+                    null,
+                    null
+            ),
+            new Todo(
+                    "Watch a movie",
+                    Todo.done_enum.DONE,
+                    Todo.priority_level.LOW,
+                    LocalDateTime.of(2022, 10, 1,0,0,0),
+                    LocalDateTime.of(2022, 11, 2,9,16,0),
+                    null
+            ),
+            new Todo(
+                    "read a book",
+                    Todo.done_enum.DONE,
+                    Todo.priority_level.LOW,
+                    LocalDateTime.of(2022, 10, 1,0,0,0),
+                    LocalDateTime.of(2022, 11, 28,9,16,0),
+                    LocalDateTime.of(2022, 10, 2,12,0,0)
+            ),
+            new Todo(
+                    "clean my keyboard",
+                    Todo.done_enum.DONE,
+                    Todo.priority_level.HIGH,
+                    LocalDateTime.of(2022, 10, 1,0,0,0),
+                    LocalDateTime.of(2022, 11, 28,9,16,0),
+                    LocalDateTime.of(2022, 11, 28,12,0,0)
+            ),
+            new Todo(
+                    "Feed my dog",
+                    Todo.done_enum.DONE,
+                    Todo.priority_level.LOW,
+                    LocalDateTime.of(2022, 10, 1,0,0,0),
+                    LocalDateTime.of(2022, 11, 12,9,16,0),
+                    LocalDateTime.of(2022, 11, 20,12,0,0)
+            ),
+            new Todo(
+                    "feed my cat",
+                    Todo.done_enum.DONE,
+                    Todo.priority_level.LOW,
+                    LocalDateTime.of(2022, 10, 1,0,0,0),
+                    LocalDateTime.of(2022, 10, 5,6,16,0),
+                    LocalDateTime.of(2022, 11, 1,18,0,0)
             )
-    )
+
+        )
     );
 
     // Method that return the current todos list
